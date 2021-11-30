@@ -3,37 +3,3 @@
   yum:
     name: httpd
     state: latest
-
-- name: Enable service to start on boot up
-  service:
-    name: httpd
-    state: started
-
-- name: Create firewall rule for apache service
-    firewalld:
-      service: http
-      zone: public
-      permanent: yes
-      immediate: yes
-      state: enabled    
-
-- name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
-  file:
-    path: /var/www/html/index.html
-    state: touch
-    mode: u=rw,g=r,o=r
-
-- name: Set some text in the file
-  lineinfile:
-    dest: /var/www/html/index.html
-    line: "{{ item.line }}"
-  loop:
-    - { line: ' Hello World ' }
-    - { line: ' from ' }
-    - { line: ' CloudBolt ' }
-
-handlers:
-  - name: Restart apache service
-    service:
-      name: httpd
-      state: restarted
