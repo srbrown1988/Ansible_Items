@@ -4,5 +4,12 @@
  
   tasks:
  
-  - name: Hello World!
-    shell: echo "Hi! Tower is working."
+  - name: install the latest version of Apache
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Enable service to start on boot up
+    service:
+      name: httpd
+      state: started
